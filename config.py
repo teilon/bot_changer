@@ -1,0 +1,1 @@
+tengiz_token = '894455650:AAEc6d7Z9MbPF6paEdwOd2OZtMT_BzanJbA'
