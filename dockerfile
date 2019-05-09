@@ -1,8 +1,15 @@
-FROM tiangolo/uwsgi-nginx-flask:python3.6
+FROM python:3.6.1
 
-ENV LISTEN_PORT 3548
-EXPOSE 3548
+RUN pip install uWSGI==2.0.15
+RUN mkdir /sockets \
+    mkdir /logs
 
-# RUN git clone https://github.com/docker/docker
-COPY ./app /app
-RUN pip3 install --no-cache-dir -r app/requirements.txt
+COPY requirements.txt /
+RUN pip install --no-cache-dir -r /requirements.txt
+
+COPY uwsgi.ini /etc/uwsgi/
+
+COPY app/ /app
+WORKDIR /app
+
+CMD /usr/local/bin/uwsgi --ini /etc/uwsgi/uwsgi.ini --ini /app/uwsgi.ini
