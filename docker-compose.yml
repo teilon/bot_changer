@@ -1,15 +1,19 @@
-version: '2'
+# docker-compose.yml
+version: '3'
 services:
-  web:
-    build: .
+  flask:
+    image: webapp-flask
+    build:
+      context: ./app/
+      dockerfile: ./app/Dockerfile-flask
     volumes:
-      - ./sockets:/sockets
-      - ./logs:/logs
-  server:
-    build: server
+      - "./:/app"
+  nginx:
+    image: webapp-nginx
+    build:
+      context: ./server/
+      dockerfile: ./server/Dockerfile-nginx
     ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ./sockets:/sockets
-      - /tmp/ssl/:/etc/nginx/ssl/
+      - 5000:80
+    depends_on:
+      - flask
