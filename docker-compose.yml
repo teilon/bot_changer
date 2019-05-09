@@ -5,14 +5,14 @@ services:
     image: webapp-flask
     build:
       context: ./app/
-      dockerfile: ./app/Dockerfile-flask
+      dockerfile: Dockerfile-flask
     volumes:
       - "./:/app"
   nginx:
     image: webapp-nginx
     build:
       context: ./server/
-      dockerfile: ./server/Dockerfile-nginx
+      dockerfile: Dockerfile-nginx
     ports:
       - 5000:80
     depends_on:
